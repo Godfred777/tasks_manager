@@ -1,19 +1,26 @@
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginDto } from './dto/login.dto';
+import { User } from 'src/users/entities/user.entity';
+import { AuthResponse } from './entities/auth.entity';
 
 @Resolver()
 export class AuthResolver {
     constructor (private authService: AuthService) {}
 
-    @Mutation(() => String)
-    async register(@Args() userDto: RegisterUserDto) {
+    @Mutation(() => User)
+    async register(@Args('input') userDto: RegisterUserDto) {
         return await this.authService.registerUser(userDto);
     }
 
-    @Mutation(() => String)
-    async login(@Args() userDto: LoginDto) {
+    @Mutation(() => AuthResponse)
+    async login(@Args('input') userDto: LoginDto) {
         return await this.authService.login(userDto)
+    }
+
+    @Query(() => String)
+    getProfile() {
+        return "Not implemented";
     }
 }
