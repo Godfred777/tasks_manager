@@ -1,9 +1,11 @@
-import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from 'src/users/entities/user.entity';
 import { AuthResponse } from './entities/auth.entity';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver()
 export class AuthResolver {
@@ -19,8 +21,12 @@ export class AuthResolver {
         return await this.authService.login(userDto)
     }
 
-    @Query(() => String)
-    getProfile() {
-        return "Not implemented";
+    @UseGuards(JwtAuthGuard)
+    @Query(() => User)
+    async getProfile(@Context() context) {
+        return context.req.user;
     }
+       
 }
+
+
