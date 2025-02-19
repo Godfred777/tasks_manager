@@ -30,7 +30,7 @@ export class ProjectsResolver {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Query(() => Project)
+    @Query(() => Project, { nullable: true })
     async getProjectById(@Args('id') id: string) {
         return await this.projectsService.findOneById(id);
     }
