@@ -7,13 +7,14 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [PrismaModule, UsersModule, GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
     playground: false,
     autoSchemaFile: true,
-  }), AuthModule, ProjectsModule],
+  }), AuthModule, ProjectsModule, TasksModule],
   controllers: [AppController],
   providers: [AppService],
 })
