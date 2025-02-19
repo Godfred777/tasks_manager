@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, IsOptional } from "class-validator";
 import { InputType, Field } from "@nestjs/graphql";
 
 @InputType()
@@ -17,9 +17,11 @@ export class CreateProjectDto {
 export class UpdateProjectDto {
     @Field()
     @IsString()
-    name: string;
+    @IsOptional()
+    name?: string;
 
     @Field()
     @IsString()
-    description: string;
+    @IsOptional()
+    description?: string;
 }
