@@ -9,16 +9,26 @@ export class ProjectsService {
     async create(data: Prisma.ProjectCreateInput): Promise<Project> {
         return this.prisma.project.create({
             data,
+            include: {
+                author: true
+            }
         });
     }
 
     async findAll(): Promise<Project[]> {
-        return this.prisma.project.findMany();
+        return this.prisma.project.findMany({
+            include: {
+                author: true
+            }
+        });
     }
 
     async findOneById(id: string): Promise<Project | null> {
         return this.prisma.project.findUnique({
             where: { id },
+            include: {
+                author: true
+            }
         });
     }
 
@@ -30,6 +40,9 @@ export class ProjectsService {
         return this.prisma.project.findMany({
             where,
             orderBy,
+            include: {
+                author: true
+            }
         });
     }
 
@@ -41,6 +54,7 @@ export class ProjectsService {
         return this.prisma.project.update({
             data,
             where,
+            include: { author: true }
         });
     }
 
