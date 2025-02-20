@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID, registerEnumType } from "@nestjs/graphql";
 import { User } from "src/users/entities/user.entity";
 import { Project } from "src/projects/entities/projects.entity";
+import { Status as PrismaStatus } from "@prisma/client";
 
 @ObjectType()
 export class Task {
@@ -14,7 +15,7 @@ export class Task {
     content: string;
 
     @Field(() => Status)
-    status: Status;
+    status: PrismaStatus;
 
     @Field(() => User)
     author: User;
@@ -35,4 +36,7 @@ export enum Status {
     COMPLETE = 'COMPLETE'
 }
 
-registerEnumType(Status, {name:"Status"})
+registerEnumType(Status, {
+    name:"Status",
+    description: "Task status",
+})
