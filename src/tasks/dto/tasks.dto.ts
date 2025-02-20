@@ -19,17 +19,17 @@ export class CreateTask {
 @InputType()
 export class UpdateTask {
 
-    @Field()
+    @Field({nullable:true})
     @IsString()
     @IsOptional()
     title?: string;
 
-    @Field()
+    @Field({nullable:true})
     @IsOptional()
     @IsString()
     content?: string;
 
-    @Field()
+    @Field(()=>Status, {nullable:true})
     @IsString()
     @IsOptional()
     @IsEnum(Status)
