@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Task } from '@prisma/client';
+import { Prisma, Task, Status } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -68,6 +68,17 @@ export class TasksService {
         return this.prisma.task.update({
             data,
             where,
+            include:{
+                author: true,
+                project: true
+            }
+        });
+    }
+
+    async updateTaskStatus(id: string, status: Status): Promise<Task> {
+        return this.prisma.task.update({
+            where: { id },
+            data: { status },
             include:{
                 author: true,
                 project: true

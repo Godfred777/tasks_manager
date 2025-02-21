@@ -72,14 +72,27 @@ export class TasksResolver {
     async updateTask(
         @Args('id') id: string,
         @Args('input') taskDto: UpdateTask,
-        status: Status
     ) {
         const updateData = {
             where: { id },
             data: {
                 title: taskDto.title,
                 content: taskDto.content,
-                status:  status
+            }
+        }
+        return await this.tasksService.updateTask(updateData);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Mutation(() => Task)
+    async updateTaskStatus(
+        @Args('id') id: string,
+        @Args('status') status: Status
+    ) {
+        const updateData = {
+            where: { id },
+            data: {
+                status
             }
         }
         return await this.tasksService.updateTask(updateData);
